@@ -96,47 +96,34 @@ public class DefaultQuestSystem implements QuestSystem {
         List<ItemStack> items = new LinkedList<>();
 
         for (Quest quest : quests.values()) {
-            if (database.hasCompleted(player.getUniqueId(), quest.getIdentifier())) {
-                ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 10);
-                ItemMeta meta = item.getItemMeta();
+            ItemStack item = new ItemStack(Material.INK_SACK, 1);
+            ItemMeta meta = item.getItemMeta();
 
-                List<String> lore = new LinkedList<>();
-                lore.addAll(quest.getDescription());
-                lore.add(" ");
-                lore.addAll(quest.getConditionDescription());
-                if (quest instanceof ProgressQuest) {
-                    lore.addAll(((ProgressQuest) quest).buildDescription(database.getProgress(player.getUniqueId(), quest.getIdentifier())));
-                }
+            List<String> lore = new LinkedList<>();
 
-                lore.add("§aerledigt");
+            lore.addAll(quest.getDescription());
+            lore.add(" ");
+            lore.addAll(quest.getConditionDescription());
 
-                meta.setDisplayName("§a" + quest.getName());
-                meta.setLore(lore);
-
-                item.setItemMeta(meta);
-
-                items.add(item);
-            } else {
-                ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 8);
-                ItemMeta meta = item.getItemMeta();
-
-                List<String> lore = new LinkedList<>();
-                lore.addAll(quest.getDescription());
-                lore.add(" ");
-                lore.addAll(quest.getConditionDescription());
-                if (quest instanceof ProgressQuest) {
-                    lore.addAll(((ProgressQuest) quest).buildDescription(database.getProgress(player.getUniqueId(), quest.getIdentifier())));
-                }
-
-                lore.add("§cnicht erledigt");
-
-                meta.setDisplayName("§c" + quest.getName());
-                meta.setLore(lore);
-
-                item.setItemMeta(meta);
-
-                items.add(item);
+            if (quest instanceof ProgressQuest) {
+                lore.addAll(((ProgressQuest) quest)
+                        .buildDescription(database.getProgress(player.getUniqueId(), quest.getIdentifier())));
             }
+
+            if (database.hasCompleted(player.getUniqueId(), quest.getIdentifier())) {
+                item.setDurability((short) 10);
+                meta.setDisplayName("§a" + quest.getName());
+                lore.add("§aerledigt");
+            } else {
+                item.setDurability((short) 8);
+                lore.add("§cnicht erledigt");
+                meta.setDisplayName("§c" + quest.getName());
+            }
+
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            items.add(item);
         }
 
         return items;
