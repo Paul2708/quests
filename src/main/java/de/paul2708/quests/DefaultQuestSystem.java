@@ -116,8 +116,8 @@ public class DefaultQuestSystem implements QuestSystem {
                 lore.add("§aerledigt");
             } else {
                 item.setDurability((short) 8);
-                lore.add("§cnicht erledigt");
                 meta.setDisplayName("§c" + quest.getName());
+                lore.add("§cnicht erledigt");
             }
 
             meta.setLore(lore);
