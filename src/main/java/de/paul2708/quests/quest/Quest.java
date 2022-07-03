@@ -34,11 +34,11 @@ public class Quest {
     }
 
     public List<String> getDescription() {
-        return description;
+        return Collections.unmodifiableList(description);
     }
 
     public List<Condition> getConditions() {
-        return conditions;
+        return Collections.unmodifiableList(conditions);
     }
 
     @Override

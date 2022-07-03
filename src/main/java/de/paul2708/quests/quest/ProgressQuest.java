@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProgressQuest extends Quest {
+
     private final int requiredProgress;
 
     public ProgressQuest(String identifier, String name, List<String> description, List<Condition> conditions,

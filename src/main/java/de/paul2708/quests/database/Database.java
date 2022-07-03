@@ -8,8 +8,9 @@ public interface Database {
 
     void complete(UUID uuid, String questIdentifier);
 
+    boolean hasCompleted(UUID uuid, String questIdentifier);
+
     int getProgress(UUID uuid, String questIdentifier);
 
     void storeProgress(UUID uuid, String questIdentifier, int newProgress);
-    boolean hasCompleted(UUID uuid, String questIdentifier);
 }

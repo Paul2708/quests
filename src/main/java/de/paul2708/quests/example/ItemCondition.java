@@ -9,7 +9,7 @@ public class ItemCondition implements Condition {
 
     @Override
     public String description() {
-        return "§8habe einen Dimanten im Inventar";
+        return "habe einen Dimanten im Inventar";
     }
 
     @Override

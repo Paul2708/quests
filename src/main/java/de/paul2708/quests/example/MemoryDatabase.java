@@ -24,6 +24,11 @@ public class MemoryDatabase implements Database {
     }
 
     @Override
+    public boolean hasCompleted(UUID uuid, String questIdentifier) {
+        return completionDatabase.containsKey(uuid) && completionDatabase.get(uuid).contains(questIdentifier);
+    }
+
+    @Override
     public int getProgress(UUID uuid, String questIdentifier) {
         return progressDatabase.getOrDefault(new AbstractMap.SimpleImmutableEntry<>(uuid, questIdentifier), 0);
     }
@@ -31,10 +36,5 @@ public class MemoryDatabase implements Database {
     @Override
     public void storeProgress(UUID uuid, String questIdentifier, int newProgress) {
         progressDatabase.put(new AbstractMap.SimpleImmutableEntry<>(uuid, questIdentifier), newProgress);
-    }
-
-    @Override
-    public boolean hasCompleted(UUID uuid, String questIdentifier) {
-        return completionDatabase.containsKey(uuid) && completionDatabase.get(uuid).contains(questIdentifier);
     }
 }
