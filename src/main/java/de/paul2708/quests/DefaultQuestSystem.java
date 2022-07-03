@@ -5,21 +5,21 @@ import de.paul2708.quests.quest.Condition;
 import de.paul2708.quests.quest.ProgressQuest;
 import de.paul2708.quests.quest.Quest;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class DefaultQuestSystem implements QuestSystem {
 
     private Database database;
-    private Map<String, Quest> quests;
+
+    private final Map<String, Quest> quests;
     private BiConsumer<Player, Quest> completionAction;
 
     public DefaultQuestSystem() {
@@ -103,14 +103,7 @@ public class DefaultQuestSystem implements QuestSystem {
                 List<String> lore = new LinkedList<>();
                 lore.addAll(quest.getDescription());
                 lore.add(" ");
-                if (!quest.getConditions().isEmpty()) {
-                    lore.add("§6Anforderungen:");
-                    for (Condition condition : quest.getConditions()) {
-                        lore.add("  §7- " + condition.description());
-                    }
-
-                    lore.add(" ");
-                }
+                lore.addAll(quest.getConditionDescription());
                 if (quest instanceof ProgressQuest) {
                     lore.addAll(((ProgressQuest) quest).buildDescription(database.getProgress(player.getUniqueId(), quest.getIdentifier())));
                 }
@@ -130,14 +123,7 @@ public class DefaultQuestSystem implements QuestSystem {
                 List<String> lore = new LinkedList<>();
                 lore.addAll(quest.getDescription());
                 lore.add(" ");
-                if (!quest.getConditions().isEmpty()) {
-                    lore.add("§6Anforderungen:");
-                    for (Condition condition : quest.getConditions()) {
-                        lore.add("  §7- " + condition.description());
-                    }
-
-                    lore.add(" ");
-                }
+                lore.addAll(quest.getConditionDescription());
                 if (quest instanceof ProgressQuest) {
                     lore.addAll(((ProgressQuest) quest).buildDescription(database.getProgress(player.getUniqueId(), quest.getIdentifier())));
                 }

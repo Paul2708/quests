@@ -3,6 +3,7 @@ package de.paul2708.quests.quest;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +24,21 @@ public class Quest {
     public boolean fulfillsConditions(Player player) {
         return conditions.stream()
                 .allMatch(cond -> cond.fulfills(player));
+    }
+
+    public List<String> getConditionDescription() {
+        List<String> lore = new LinkedList<>();
+
+        if (!conditions.isEmpty()) {
+            lore.add("§6Anforderungen:");
+            for (Condition condition : conditions) {
+                lore.add("  §8- §7" + condition.description());
+            }
+
+            lore.add(" ");
+        }
+
+        return lore;
     }
 
     public String getIdentifier() {
